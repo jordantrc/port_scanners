@@ -18,7 +18,7 @@ def parse_line(line, output_directory):
         return None
     
     state, proto, port, host, ident = line.split()
-    output_file = os.path.join(output_directory, "%s.txt" % port)
+    output_file = os.path.join(output_directory, "%s_%s.txt" % (proto, port))
     
     # write the host to the output file
     with open(output_file, 'a') as host_fd:
