@@ -43,7 +43,7 @@ def main():
     assert not os.path.isdir(output_directory)
 
     # make the directory
-    os.mkdir(output_directory, 0755)
+    os.mkdir(output_directory, '0755')
 
     with open(masscan_file, 'r') as masscan_fd:
         for line in masscan_fd:
