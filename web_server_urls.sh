@@ -14,7 +14,7 @@ usage() {
 if [ "$#" -ne 2 ]; then
     echo "Illegal number of parameters, exiting"
     usage
-    exit(1)
+    exit 1
 fi
 
 DIR=$1
@@ -39,4 +39,4 @@ for p in ${SECURE_WEB_PORTS[@]}; do
 	fi
 done
 
-exit(0)
+exit 0
