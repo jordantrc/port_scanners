@@ -19,9 +19,9 @@ fi
 
 DIR=$1
 OUTPUT_FILE=$2
-WEB_PORTS=("80", "3000", "7000", "7001", "7002", "8000",\
- "8080", "8081", "8888", "9000")
-SECURE_WEB_PORTS=("443", "8443")
+WEB_PORTS=("80" "3000" "7000" "7001" "7002" "8000"\
+ "8080" "8081" "8888" "9000")
+SECURE_WEB_PORTS=("443" "8443")
 
 # look for files in DIR that contain secure and non-secure
 # web ports
