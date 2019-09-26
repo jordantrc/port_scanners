@@ -28,6 +28,7 @@ SECURE_WEB_PORTS=("443", "8443")
 for p in ${WEB_PORTS[@]}; do
 	FILE="$DIR/tcp_$p.txt"
 	if [[ -f "$FILE" ]]; then
+		echo "Processing $FILE"
 		cat $FILE | xargs -I {} echo "http://{}:$p" >> $OUTPUT_FILE
 	fi
 done
@@ -35,6 +36,7 @@ done
 for p in ${SECURE_WEB_PORTS[@]}; do
 	FILE="$DIR/tcp_$p.txt"
 	if [[ -f "$FILE" ]]; then
+		echo "Processing $FILE"
 		cat $FILE | xargs -I {} echo "https://{}:$p" >> $OUTPUT_FILE
 	fi
 done
