@@ -1,6 +1,11 @@
 #!/bin/bash
 
-usage () { echo "Usage: masscan.sh [-p <top n ports>] -r <scan rate> -t <targets file> -o <output file basename>"; }
+usage () { 
+	echo "Usage: masscan.sh [-p <top n ports>] -r <scan rate> -t <targets> -o <output file basename>"
+	echo "	-t:		target specification can be either a file, a network with subnet mask, or a"
+	echo "			single IP address" 
+}
+
 
 while getopts "hp:r:t:o:" OPTION; do
 	case "$OPTION" in
@@ -54,9 +59,16 @@ then
 else
 	if [ "$NUM_PORTS" -ge 1 -a "$NUM_PORTS" -le 100 ]
 	then
+		# construct the port list
 		PORTLIST=""
+		i=0
 		for port in ${TOP_100_PORTLIST[@]:0:$NUM_PORTS}; do
-			PORTLIST+="$port,"
+			PORTLIST+="$port"
+			i=$((i+1))
+			if [[ "$i" -lt $NUM_PORTS ]]
+			then
+				PORTLIST+=","
+			fi
 		done
 	else
 		echo "Number of ports must be between 1 and 100"
