@@ -7,7 +7,7 @@ while getopts "hp:r:t:o:" OPTION; do
 		h ) usage; exit;;
 		p ) NUM_PORTS="$OPTARG";;
 		r ) RATE="$OPTARG";;
-		t ) TARGETSFILE="$OPTARG";;
+		t ) TARGETS="$OPTARG";;
 		o ) OUTPUTBASE="$OPTARG";;
 		\?) echo "Unknown option: -$OPTARG" >&2; exit 1;;
 		: ) echo "Missing argument for -$OPTARG" >&2; exit 1;;
@@ -16,11 +16,22 @@ while getopts "hp:r:t:o:" OPTION; do
 done
 
 # test required arguments
-if [ ! "$RATE" ] || [ ! "$TARGETSFILE" ] || [ ! "$OUTPUTBASE" ]
+if [ ! "$RATE" ] || [ ! "$TARGETS" ] || [ ! "$OUTPUTBASE" ]
 then
 	echo "Missing required arguments"
 	usage
 	exit 1
+fi
+
+# set the target list - either a network and subnet mask or file
+if [ -f "$TARGETS" ]; 
+then
+	TARGET_SPECIFICATION="-iL $TARGETS"
+	TARGET_LIST=`cat $TARGETS`
+elif [[ "$TARGETS" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/[0-9]+$ ]] || [[ "$TARGETS" =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]
+then
+	TARGET_SPECIFICATION="$TARGETS"
+	TARGET_LIST="$TARGETS"
 fi
 
 # set the port list for scanning
@@ -55,10 +66,9 @@ fi
 
 echo "PORTLIST = $PORTLIST"
 
-MASSCAN_CMD="masscan -iL $TARGETSFILE --ping -p$PORTLIST --rate $RATE -oG $OUTPUTBASE.gmasscan -oL $OUTPUTBASE.masscan"
+MASSCAN_CMD="masscan $TARGET_SPECIFICATION --ping -p$PORTLIST --rate $RATE -oG $OUTPUTBASE.gmasscan -oL $OUTPUTBASE.masscan"
 
 LOGFILE=$OUTPUTBASE"_log.txt"
-TARGETS=`cat $TARGETSFILE`
 echo "============ifconfig===============" > $LOGFILE
 ifconfig >> $LOGFILE
 echo "============/etc/resolv.conf===============" >> $LOGFILE
@@ -70,7 +80,7 @@ date >> $LOGFILE
 echo "============masscan command===============" >> $LOGFILE
 echo "$MASSCAN_CMD" >> $LOGFILE
 echo "============targets===============" >> $LOGFILE
-echo "$TARGETS" >> $LOGFILE
+echo "$TARGET_LIST" >> $LOGFILE
 echo "============masscan output===============" >> $LOGFILE
 
 TIMESTAMP=`date`
