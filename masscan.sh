@@ -12,7 +12,7 @@ usage () {
 }
 
 
-while getopts "hp:r:t:o:" OPTION; do
+while getopts "hl:p:r:t:o:" OPTION; do
 	case "$OPTION" in
 		h ) usage; exit;;
 		p ) NUM_PORTS="$OPTARG";;
