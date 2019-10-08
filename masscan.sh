@@ -1,9 +1,14 @@
 #!/bin/bash
 
 usage () { 
-	echo "Usage: masscan.sh [-p <top n ports>] -r <scan rate> -t <targets> -o <output file basename>"
+	echo "Usage: masscan.sh [port specification] -r <scan rate> -t <targets> -o <output file basename>"
 	echo "	-t:		target specification can be either a file, a network with subnet mask, or a"
-	echo "			single IP address" 
+	echo "			single IP address"
+	echo "	port specification:"
+	echo "			-p <n>: scan the top n ports as determined by the nmap scanner, n must be between"
+	echo "					1 and 100 (inclusive)."
+	echo "			-l p1,p2,p3,...pn:	scan the listed tcp ports"
+	echo "			if no option is specified, a default list of 158 TCP ports will be scanned."
 }
 
 
@@ -11,6 +16,7 @@ while getopts "hp:r:t:o:" OPTION; do
 	case "$OPTION" in
 		h ) usage; exit;;
 		p ) NUM_PORTS="$OPTARG";;
+		l ) PORT_LIST="$OPTARG";;
 		r ) RATE="$OPTARG";;
 		t ) TARGETS="$OPTARG";;
 		o ) OUTPUTBASE="$OPTARG";;
@@ -53,10 +59,11 @@ TOP_100_PORTLIST=( 80 23 443 21 22 25 3389 110 445 139 143 53 135 3306 8080 1723
 	544 5101 144 7 389 8009 3128 444 9999 5009 7070 5190 3000 5432 1900 3986 13 1029 9 5051 6646 49157 1028 873 \
 	1755 2717 4899 9100 119 37 )
 
-if [ ! "$NUM_PORTS" ]
+if [ ! "$NUM_PORTS" ] && [ ! "$PORT_LIST" ]
 then
 	PORTLIST=$DEFAULT_PORTLIST
-else
+elif [ "$NUM_PORTS" ]
+then
 	if [ "$NUM_PORTS" -ge 1 -a "$NUM_PORTS" -le 100 ]
 	then
 		# construct the port list
@@ -74,11 +81,14 @@ else
 		echo "Number of ports must be between 1 and 100"
 		exit 1
 	fi
+elif [ "$PORT_LIST" ]
+then
+	PORTLIST="$PORT_LIST"
 fi
 
 echo "PORTLIST = $PORTLIST"
 
-MASSCAN_CMD="masscan $TARGET_SPECIFICATION --ping -p$PORTLIST --rate $RATE -oG $OUTPUTBASE.gmasscan -oL $OUTPUTBASE.masscan"
+MASSCAN_CMD="masscan $TARGET_SPECIFICATION --ping -p$PORTLIST --rate $RATE -oL $OUTPUTBASE.masscan"
 
 LOGFILE=$OUTPUTBASE"_log.txt"
 echo "============ifconfig===============" > $LOGFILE
