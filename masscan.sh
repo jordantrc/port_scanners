@@ -3,15 +3,16 @@
 
 usage () { 
     echo "Usage: masscan.sh [port specification] <-rto> [-m] "
-    echo "	-r:     "
-    echo "	-t:     target specification can be either a file, a network with subnet mask, or a"
+    echo "  -o:     base names for output files"
+    echo "  -r:     scanning rate (packets per second)"
+    echo "  -t:     target specification can be either a file, a network with subnet mask, or a"
     echo "          single IP address"
     echo "  -m:     router MAC address"
     echo ""
-    echo "	port specification:"
-    echo "	-p <n>  scan the top n ports as determined by the nmap scanner, n must be between"
-    echo "			1 and 100 (inclusive)."
-    echo "	-l      p1,p2,p3,...pn:	scan the listed tcp ports"
+    echo "  port specification:"
+    echo "  -p <n>  scan the top n ports as determined by the nmap scanner, n must be between"
+    echo "          1 and 100 (inclusive)."
+    echo "  -l      p1,p2,p3,...pn:	scan the listed tcp ports"
     echo "	if no option is specified, a default list of 158 TCP ports will be scanned."
 }
 
@@ -102,7 +103,7 @@ fi
 
 masscan_cmd="masscan $target_specification --ping $router_option -p$portlist --rate $rate -oL $outputbase.masscan"
 
-LOGFILE=$outputbase"_log.txt"
+logfile=$outputbase"_log.txt"
 echo "============ifconfig===============" > $logfile
 ifconfig >> $logfile
 echo "============/etc/resolv.conf===============" >> $logfile
