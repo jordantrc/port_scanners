@@ -104,23 +104,23 @@ fi
 masscan_cmd="masscan $target_specification --ping $router_option -p$portlist --rate $rate -oL $outputbase.masscan"
 
 logfile=$outputbase"_log.txt"
-echo "============ifconfig===============" > $logfile
-ifconfig >> $logfile
-echo "============/etc/resolv.conf===============" >> $logfile
-cat /etc/resolv.conf >> $logfile
-echo "============netstat -rn===============" >> $logfile
-netstat -rn >> $logfile
-echo "============date===============" >> $logfile
-date >> $logfile
-echo "============masscan command===============" >> $logfile
-echo "$masscan_cmd" >> $logfile
-echo "============targets===============" >> $logfile
-echo "$target_list" >> $logfile
-echo "============masscan output===============" >> $logfile
+echo "============ifconfig===============" > "${logfile}"
+ifconfig >> "${logfile}"
+echo "============/etc/resolv.conf===============" >> "${logfile}"
+cat /etc/resolv.conf >> "${logfile}"
+echo "============netstat -rn===============" >> "${logfile}"
+netstat -rn >> "${logfile}"
+echo "============date===============" >> "${logfile}"
+date >> "${logfile}"
+echo "============masscan command===============" >> "${logfile}"
+echo "$masscan_cmd" >> "${logfile}"
+echo "============targets===============" >> "${logfile}"
+echo "$target_list" >> "${logfile}"
+echo "============masscan output===============" >> "${logfile}"
 
 timestamp=`date`
-echo "STARTING MASSCAN - $timestamp" >> $logfile
-$masscan_cmd | tee -a $logfile
+echo "STARTING MASSCAN - $timestamp" >> "${logfile}"
+$masscan_cmd | tee -a "${logfile}"
 
 timestamp=`date`
-echo "MASSCAN FINISHED - $timestamp" >> $logfile
+echo "MASSCAN FINISHED - $timestamp" >> "${logfile}"
