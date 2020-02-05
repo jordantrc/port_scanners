@@ -16,7 +16,7 @@ web_ports=("80" "8080" "8000" "8888")
 all_ports=( "${database_ports[@]}" "${file_transfer_ports[@]}" "${ms_ports[@]}" "${remote_access_ports[@]}" \
             "${secure_web_ports[@]}" "${web_ports[@]}" )
 
-for port in $all_ports; do
+for port in "${all_ports[@]}"; do
     host_file=$directory"/tcp_"$port".txt"
 
     if [ -f "$host_file" ]; then
@@ -68,6 +68,6 @@ verify_web_port() {
             result="false-positive tcp $port $ip_address unrecognized service header/protocol error/MFA redirect"
         fi
     fi
-    
+
     return $result
 }
