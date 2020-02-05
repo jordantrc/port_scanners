@@ -13,13 +13,14 @@ ms_ports=("88" "135" "139" "389" "445" "636")
 remote_access_ports=("22" "3389" "5900" "5901")
 secure_web_ports=("443" "4443" "8443")
 web_ports=("80" "8080" "8000" "8888")
-all_ports=( "${database_ports[@]}" "${file_transfer_ports[@]}" "${ms_ports}" "${remote_access_ports}" "${secure_web_ports}" \
-            "${web_ports}" )
+all_ports=( "${database_ports[@]}" "${file_transfer_ports[@]}" "${ms_ports[@]}" "${remote_access_ports[@]}" \
+            "${secure_web_ports[@]}" "${web_ports[@]}" )
 
 for port in $all_ports; do
     host_file=$directory"/tcp_"$port".txt"
 
     if [ -f "$host_file" ]; then
+        echo "Performing service detection for port $port hosts"
         scan_file=$directory"/service_version_tcp_"$port".gnmap"
         nmap -p $port -sV -Pn -iL $host_file -oG $scan_file
     fi
@@ -43,7 +44,7 @@ verify_ftp_port() {
         service_header=$(echo "$nmap_result" | 
             awk '{ for(i=5; i<NF; i++) printf "%s",$i OFS; if(NF) printf "%s",$NF; printf ORS}' | 
             cut -d "/" -f 7)
-        
+    fi
 
 }
 
