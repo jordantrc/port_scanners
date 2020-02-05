@@ -67,8 +67,7 @@ verify_web_port() {
         if [[ "$service_header" =~ ^http\??$ ]] || [[ "${#service_header}" -eq 0 ]]; then
             result="false-positive tcp $port $ip_address unrecognized service header/protocol error/MFA redirect"
         fi
-
+    fi
+    
     return $result
 }
-
-
