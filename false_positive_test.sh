@@ -17,10 +17,11 @@ all_ports=( "${database_ports[@]}" "${file_transfer_ports[@]}" "${ms_ports[@]}" 
             "${secure_web_ports[@]}" "${web_ports[@]}" )
 
 for port in "${all_ports[@]}"; do
-    echo "Performing service detection for port $port hosts"    
-    host_file=$directory"/tcp_"$port".txt"
+    host_file=$directory"/tcp_"$port".txt"    
 
     if [ -f "$host_file" ]; then
+        num_hosts=$(cat $host_file | sort | uniq | wc -l)
+        echo "Performing service detection for $num_hosts hosts on port $port" 
         scan_file=$directory"/service_version_tcp_"$port".gnmap"
         nmap -p $port -sV -Pn -iL $host_file -oG $scan_file
     fi
