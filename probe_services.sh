@@ -18,7 +18,7 @@ pps_per_job=$(expr $pps / $num_jobs)
 echo "[*] using $pps_per_job pps/job"
 
 running_jobs=0
-for f in ${directory}"/*" do
+for f in ${directory}/*; do
     host_file=$directory"/"$f
     proto=$(echo $f | cut -d "_" -f 1)
     port=$(echo $f | cut -d "_" -f 2 | cut -d "." -f 1)    
