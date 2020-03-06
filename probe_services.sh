@@ -19,9 +19,9 @@ echo "[*] using $pps_per_job pps/job"
 
 running_jobs=0
 for f in ${directory}/*; do
-    host_file=$directory"/"$f
-    proto=$(echo $f | cut -d "_" -f 1)
-    port=$(echo $f | cut -d "_" -f 2 | cut -d "." -f 1)    
+    filename=$(basename "$f")
+    proto=$(echo "$filename" | cut -d "_" -f 1)
+    port=$(echo "$filename" | cut -d "_" -f 2 | cut -d "." -f 1)    
 
     if [ ${proto} != "icmp" ]; then
         num_hosts=$(cat $host_file | sort | uniq | wc -l) 
