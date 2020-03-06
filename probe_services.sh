@@ -23,13 +23,14 @@ for f in ${directory}/*; do
     proto=$(echo $f | cut -d "_" -f 1)
     port=$(echo $f | cut -d "_" -f 2 | cut -d "." -f 1)    
 
-    if [ ${proto} -ne "icmp" ]; then
+    if [ ${proto} != "icmp" ]; then
         num_hosts=$(cat $host_file | sort | uniq | wc -l) 
         scan_file=$directory"/service_version_"$proto"_"$port".gnmap"
         if [${proto} -eq "udp" ]; then
             scan_type_option="-sU"
         else
             scan_type_option=""
+        fi
         # run each nmap task as background job so it can be done in parallel
         nmap $scan_type_option --max-rate $pps_per_job -p $port -sV -Pn -iL $host_file -oG $scan_file &
         pid=$!
