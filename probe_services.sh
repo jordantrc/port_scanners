@@ -7,14 +7,14 @@
 
 if [ $# -ne 4 ]; then
     echo "Usage: probe_services.sh <directory> <num jobs> <max packets per second>"
-    return 1
+    exit 1
 fi
 
 directory=$1
 num_jobs=$2
 pps=$3
 
-pps_per_job=expr $pps / $num_jobs
+pps_per_job=$(expr $pps / $num_jobs)
 echo "[*] using $pps_per_job pps/job"
 
 running_jobs=0
