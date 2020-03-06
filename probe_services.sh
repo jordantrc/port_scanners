@@ -5,7 +5,7 @@
 # Checks for false positives given a directory
 # as output by the scan_host_list.py utility.
 
-if [ "$#" -neq 4 ]; then
+if [ $# -ne 4 ]; then
     echo "Usage: probe_services.sh <directory> <num jobs> <max packets per second>"
     return 1
 fi
