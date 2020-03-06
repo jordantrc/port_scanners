@@ -34,10 +34,11 @@ for f in ${directory}"/*"; do
         nmap $scan_type_option --max-rate $pps_per_job -p $port -sV -Pn -iL $host_file -oG $scan_file &
         pid=$!
         running_jobs=$(expr $running_jobs + 1)
-        echo "[*] Started service detection job for $num_hosts $proto/$port hosts [PID $pid job $running_jobs of $num_jobs]"
+        echo "[*] started service detection job for $num_hosts $proto/$port hosts [PID $pid job $running_jobs of $num_jobs]"
         if [ $running_jobs -eq $num_jobs ]; then
-            echo "[*] Waiting for jobs to finish"
+            echo "[*] waiting for jobs to finish"
             wait
+            echo "[*] all jobs completed"
             running_jobs=0
         fi
     fi
@@ -45,4 +46,4 @@ done
 
 wait
 
-echo "All service detection jobs complete"
+echo "[*] all service detection jobs complete"
