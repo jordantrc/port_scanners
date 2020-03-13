@@ -44,13 +44,14 @@ def parse_line(line, output_directory, file_type):
             port_info = port_info.strip()
             if "Ignored State" in port_info:
                 port_info, _ = port_info.split('Ignored State:')
-                port_info = port_info.strip()
-                port_list = port_info.split(',')
-                port_list = [ x.strip() for x in port_list ]
-                for p in port_list:
-                    port, state, proto, _, desc, _, _, _ = p.split('/')
-                    if state == "open":
-                        host_output(output_directory, proto, port, host)
+            port_info = port_info.strip()
+            port_list = port_info.split(',')
+            port_list = [ x.strip() for x in port_list ]
+            for p in port_list:
+                port, state, proto, _, desc, _, _, _ = p.split('/')
+                if state == "open":
+                    host_output(output_directory, proto, port, host)
+
 
     return True
 
