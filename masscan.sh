@@ -13,6 +13,7 @@ usage () {
     echo "  -m:     router MAC address"
     echo "  -u:     perform a UDP scan as well as a TCP scan"
     echo "  -e:     don't scan, just echo the masscan command that would be run"
+    echo "  -a:     perform false positive checks automatically"
     echo ""
     echo "  port specification:"
     echo "  -p <n>  scan the top n ports as determined by nmap, n must be between"
@@ -24,8 +25,10 @@ usage () {
 gw_mac_address=""
 udp_scan=false
 echo_only=false
-while getopts "ehul:m:o:p:r:t:" OPTION; do
+auto_check=false
+while getopts "aehul:m:o:p:r:t:" OPTION; do
     case "$OPTION" in
+        a ) auto_check=true;;
         e ) echo_only=true;;
         h ) usage; exit;;
         u ) udp_scan=true;;
@@ -47,6 +50,18 @@ then
     echo "Missing required arguments"
     usage
     exit 1
+fi
+
+# test if necessary scripts for auto-check are in the local directory
+if [ "$auto_check" = true ]; then
+    if [ ! -f "scan_host_list.py" ]; then
+        echo "[-] scan_host_list.py is missing"
+        exit 1
+    fi
+    if [ ! -f "probe_services.sh" ]; then
+        echo "[-] probe_services.sh is missing"
+        exit 1
+    fi
 fi
 
 # set the target list - either a network and subnet mask or file
@@ -162,3 +177,13 @@ $masscan_cmd | tee -a "${logfile}"
 
 timestamp=`date`
 echo "MASSCAN FINISHED - $timestamp" >> "${logfile}"
+
+# perform service checks automatically if specified
+if [ "$auto_check" = true ]; then
+    python3 scan_host_list.py "$outputbase.masscan" "$outputbase"
+    if [ $? -ne 0 ]; then
+        echo "[-] scan_host_list.py job failed"
+        exit 1
+    fi
+    ./probe_services.sh "$outputbase" 10 "$rate"
+fi
