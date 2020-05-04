@@ -1,0 +1,222 @@
+Protocol	Port	Description
+TCP	1	TCPMUX
+TCP	3	
+TCP	7	Echo protocol
+TCP	9	"Discard protocol, wake on LAN"
+TCP	13	Daytime protocol
+TCP	17	Quote of the day
+TCP	19	Character generator protocol
+TCP	21	File Transfer Protocol (FTP)
+TCP	22	Secure Shell (SSH)
+TCP	23	Telnet
+TCP	25	Simple Mail Transfer Protocol (SMTP)
+TCP	26	
+TCP	37	Time protocol
+TCP	53	Domain Name System (DNS)
+TCP	79	Finger
+TCP	80	HTTP
+TCP	81	TorPark onion routing
+TCP	82	TorPark control
+TCP	88	Kerberos
+TCP	100	
+TCP	106	
+TCP	110	POP3
+TCP	111	Sun RPC
+TCP	113	Ident
+TCP	119	Network News Transfer Protocol
+TCP	135	DCE/RPC locator
+TCP	139	NetBIOS Session
+TCP	143	IMAP
+TCP	144	
+TCP	179	Border Gateway Protocol (BGP)
+TCP	199	SNMP Unix Multiplexer
+TCP	254	Reserved
+TCP	255	Reserved
+TCP	280	http-mgmt
+TCP	311	Mac OS X Server Admin
+TCP	389	LDAP
+TCP	427	Service Location Protocol (SLP)
+TCP	443	HTTPS
+TCP	444	Simple Network Paging Protocl (SNPP)
+TCP	445	Server Message Block (SMB)
+TCP	464	Kerberos change/set password
+TCP	465	Authenticated SMTP over TLS/SSL (SMTPS)
+TCP	497	Retrospect
+TCP	513	"rlogin, who"
+TCP	514	"Remote Shell, Syslog"
+TCP	515	Line Printer Daemon (LPD)
+TCP	543	"klogin, Kerberos login"
+TCP	544	"kshell, Keberos Remote shell"
+TCP	548	Apple Filing Protocol (AFP)
+TCP	554	Real Time Streaming Protocol (RTSP)
+TCP	587	Email message submission (SMTP)
+TCP	593	HTTP RPC Ep Map
+TCP	625	Open Directory Proxy (ODProxy)
+TCP	631	Internet Printing Protocol (IPP)
+TCP	636	Secure LDAP (LDAPS)
+TCP	646	Label Distribution Protocol (LDP)
+TCP	787	
+TCP	808	Microsoft Net. TCP port sharing servive
+TCP	873	rsync file sync
+TCP	902	VMware ESXi
+TCP	903	VMware ESXi
+TCP	993	Secure IMAP (IMAPS)
+TCP	995	Secure POP3 (POP3S)
+TCP	999	
+TCP	1000	
+TCP	1022	
+TCP	1024	Reserved
+TCP	1025	
+TCP	1026	
+TCP	1027	Native IPv6 being IPv4-to-IPv4 NAT (6a44)
+TCP	1028	
+TCP	1029	Microsoft DCOM
+TCP	1030	
+TCP	1031	
+TCP	1032	
+TCP	1033	
+TCP	1035	
+TCP	1036	
+TCP	1037	
+TCP	1038	
+TCP	1039	
+TCP	1040	
+TCP	1041	
+TCP	1044	
+TCP	1048	
+TCP	1049	
+TCP	1050	
+TCP	1053	
+TCP	1054	
+TCP	1056	
+TCP	1058	"nim, IBM AIX Network Installation Manager"
+TCP	1059	"nimreg, IBM AIX Network Installation Manager"
+TCP	1064	
+TCP	1065	
+TCP	1066	
+TCP	1069	
+TCP	1071	
+TCP	1074	
+TCP	1080	SOCKS Proxy
+TCP	1110	
+TCP	1234	"Infoseek, VLC media player"
+TCP	1433	MSSQL Server
+TCP	1494	Citrix ICA
+TCP	1521	Oracle
+TCP	1720	H.323 call signaling
+TCP	1723	Point-to-Point Tunneling Protocol (PPTP)
+TCP	1755	Microsoft Media Services
+TCP	1761	Novell ZENworks
+TCP	1801	Microsoft Message Queueing
+TCP	1900	Simple Service Discovery Protocol (SSDP)
+TCP	1935	Macromedia flash communications server MX
+TCP	1993	
+TCP	1998	Cisco X.25 over TCP (XOT)
+TCP	2000	Cisco Skinny Client Control Protocol (SCCP)
+TCP	2001	
+TCP	2002	
+TCP	2005	
+TCP	2049	Network File System (NFS)
+TCP	2103	Zephyr notification service
+TCP	2105	
+TCP	2107	
+TCP	2121	
+TCP	2161	
+TCP	2301	
+TCP	2383	
+TCP	2401	CVS version control system
+TCP	2601	
+TCP	2717	
+TCP	2869	
+TCP	2967	Symantec System Center agent
+TCP	3000	"Cloud9 IDE, Ruby on Rails development, Meteor development"
+TCP	3001	
+TCP	3128	
+TCP	3268	Active Directory Global Catalog
+TCP	3306	MySQL
+TCP	3389	Remote Desktop Protocol
+TCP	3689	Digital Audio Access Protocol (DAAP)
+TCP	3690	Subversion version control 
+TCP	3703	
+TCP	3986	
+TCP	4000	Diablo II game
+TCP	4001	"Microsoft Ants game, CoreOS etcd client"
+TCP	4045	Solaris lockd NFS lock daemon
+TCP	4505	Salt master
+TCP	4506	Salt master
+TCP	4899	
+TCP	5000	"UPnP, Vtun, Flask Development Webserver, Docker Registry"
+TCP	5001	"Slingbox, Synology management"
+TCP	5003	FileMaker
+TCP	5009	
+TCP	5050	Yahoo Messenger
+TCP	5051	ita-agent Symantec Intruder Alert
+TCP	5060	Session Initiation Protocol (SIP)
+TCP	5101	
+TCP	5120	
+TCP	5190	AOL Instant Messenger
+TCP	5357	Web Services for Devices (WSDAPI)
+TCP	5432	PostgreSQL
+TCP	5555	"Oracle WebCenter, Freeciv, HP Data Protector"
+TCP	5556	"Freeciv, Oracle WebLogic Server Node Manager"
+TCP	5631	pcAnywhere
+TCP	5666	NRPE (Nagios)
+TCP	5800	VNC Remote Frame Buffer
+TCP	5900	"Remote Frame Buffer, VNC"
+TCP	5901	
+TCP	5985	Windows PowerShell default psSession port
+TCP	6000	X11
+TCP	6001	X11
+TCP	6002	X11
+TCP	6004	X11
+TCP	6112	"dtspcd, Battle.net gaming, Club Penguin"
+TCP	6646	
+TCP	7000	"HTTPS Bittorrent, Avira Server Management"
+TCP	7001	Avira Server Management
+TCP	7002	BEA WebLogic HTTPS
+TCP	7070	Real Time Streaming Protocol (RTSP)
+TCP	7937	
+TCP	7938	
+TCP	8000	"HTTP-Alt, Django development server"
+TCP	8001	
+TCP	8002	
+TCP	8008	"IBM HTTP Server administration, iCal"
+TCP	8009	Apache Jserv Protocol (ajp13)
+TCP	8010	Buildbot Web status page
+TCP	8031	
+TCP	8080	"HTTP-Alt, Apache Tomcat, Atlassian JIRA"
+TCP	8081	
+TCP	8443	"Apache Tomcat SSL, iCal over SSL"
+TCP	8888	"HyperVM over HTTP/S, Ipython, Jupyter"
+TCP	9000	"Hadoop NameNode, PHP-FPM"
+TCP	9001	"Microsoft SharePoint, Tor Network default, HSQLDB"
+TCP	9090	Openfire Administration
+TCP	9100	PDL Data Stream
+TCP	9102	Bacula File Daemon
+TCP	9999	Urchin Web Analytics
+TCP	10000	VoIP
+TCP	10010	VoIP
+TCP	32768	
+TCP	32771	
+TCP	49152	Certificate Management over CMS
+TCP	49153	
+TCP	49154	
+TCP	49155	
+TCP	49156	
+TCP	49157	
+TCP	50000	
+UDP	53	Domain Name System (DNS)
+UDP	67	"Bootstrap Protocol (BOOTP), Dynamic Host Configuration Protocol (DHCP)"
+UDP	68	"Bootstrap Protocol (BOOTP), Dynamic Host Configuration Protocol (DHCP)"
+UDP	69	Trivial File Transfer Protocol (TFTP)
+UDP	123	Network Time Protocol (NTP)
+UDP	135	Microsoft DCE/RPC
+UDP	137	NetBIOS Name Service
+UDP	138	NetBIOS Datagram Service
+UDP	139	NetBIOS Session
+UDP	161	Simple Network Management Protocl (SNMP)
+UDP	500	"Internet Security Association and Key Management Protocol (ISAKMP), Internet Key Exchange (IKE)"
+UDP	514	Syslog
+UDP	520	Routing Information Protocol (RIP)
+UDP	631	"Internet Printing Protocol (IPP), Common Unix Printing System (CUPS)"
+UDP	1434	MSSQL monitor
