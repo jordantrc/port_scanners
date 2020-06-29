@@ -2,7 +2,7 @@
 #
 
 usage () { 
-    echo "Usage: masscan.sh [port specification] -ort <value> [-m] <value>"
+    echo "Usage: masscan.sh [port specification] [OPTIONS] -o <output base name> -r <scanning rate> -t <target specification>"
     echo "Required Arguments:"
     echo "  -o:     base names for output files"
     echo "  -r:     scanning rate (packets per second)"
@@ -14,6 +14,7 @@ usage () {
     echo "  -u:     perform a UDP scan as well as a TCP scan"
     echo "  -e:     don't scan, just echo the masscan command that would be run"
     echo "  -a:     perform false positive checks automatically"
+    echo "  -x:     file containing systems to exclude from scanning"
     echo ""
     echo "  port specification:"
     echo "  -p <n>  scan the top n ports as determined by nmap, n must be between"
@@ -23,10 +24,11 @@ usage () {
 }
 
 gw_mac_address=""
+exclude_file=""
 udp_scan=false
 echo_only=false
 auto_check=false
-while getopts "aehul:m:o:p:r:t:" OPTION; do
+while getopts "aehul:m:o:p:r:t:x:" OPTION; do
     case "$OPTION" in
         a ) auto_check=true;;
         e ) echo_only=true;;
@@ -38,6 +40,7 @@ while getopts "aehul:m:o:p:r:t:" OPTION; do
         p ) num_ports="$OPTARG";;
         r ) rate="$OPTARG";;
         t ) targets="$OPTARG";;
+        x ) exclude_file="$OPTARG";;
         \?) echo "Unknown option: -$OPTARG" >&2; exit 1;;
         : ) echo "Missing argument for -$OPTARG" >&2; exit 1;;
         * ) echo "Invalid option provided: -$OPTARG" >&2; exit 1;;
@@ -148,7 +151,14 @@ else
     router_option=""
 fi
 
-masscan_cmd="masscan $target_specification --ping $router_option -p$port_argument --rate $rate -oL $outputbase.masscan"
+# check if exclude_file option is set
+if [ ${#exclude_file} -gt 0 ]; then
+    exclude_option="--excludefile $exclude_file"
+else
+    exclude_option=""
+fi
+
+masscan_cmd="masscan $target_specification $exclude_option --ping $router_option -p$port_argument --rate $rate -oL $outputbase.masscan"
 
 if [ "$echo_only" = true ]; then
     echo "Masscan command:"
