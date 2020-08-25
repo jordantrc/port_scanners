@@ -50,3 +50,4 @@ done
 wait
 
 echo "[*] all service detection jobs complete"
+exit 0
