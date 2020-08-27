@@ -114,6 +114,7 @@ def probe_service(args):
         nmap_command = "nmap %s -Pn -p%s --max-rate %s -sV -iL %s -oG %s" % (scan_type, port, pps, host_file, output_file)
         print("[*] initiating service detection for %s/%s" % (protocol.upper(), port))
         print(nmap_command)
+        nmap_command = nmap_command.split()
         result = subprocess.run(nmap_command, capture_output=True)
         if len(result.stderr) > 0:
             print("[-] ERROR in nmap command %s" % nmap_command)
