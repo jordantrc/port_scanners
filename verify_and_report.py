@@ -151,7 +151,7 @@ def main():
 
     # output_directory is now full of files named protocol_port number.txt
     host_files = os.listdir(output_directory)
-    host_files = [[pps_per_scan, output_directory + os.path.pathsep + x] for x in host_files]
+    host_files = [[pps_per_scan, os.path.join(output_directory, x)] for x in host_files]
     with multiprocessing.Pool(processes=num_scans) as pool:
         pool.map(probe_service, host_files)
     
