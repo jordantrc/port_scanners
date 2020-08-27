@@ -101,6 +101,7 @@ def probe_service(args):
     host_file_name = os.path.basename(host_file)
     host_file_dir = os.path.dirname(host_file)
     protocol, port = host_file_name.split(".")[0].split("_")
+    print("host_file_name = %s, protocol = %s, port = %s" % (host_file_name, protocol, port))
 
     if protocol in ["tcp", "udp"]:
         output_file = host_file_dir + os.path.pathsep + "service_detection_%s_%s.gnmap" % (protocol, port)
