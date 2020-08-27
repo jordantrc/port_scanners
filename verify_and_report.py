@@ -104,7 +104,7 @@ def probe_service(args):
     print("host_file_name = %s, protocol = %s, port = %s" % (host_file_name, protocol, port))
 
     if protocol in ["tcp", "udp"]:
-        output_file = host_file_dir + os.path.pathsep + "service_detection_%s_%s.gnmap" % (protocol, port)
+        output_file = os.path.join(host_file_dir, "service_detection_%s_%s.gnmap" % (protocol, port))
 
         # determine the scan type and run it
         if protocol == "tcp":
