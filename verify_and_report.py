@@ -101,7 +101,7 @@ def probe_service(args):
     host_file_name = os.path.basename(host_file)
     host_file_dir = os.path.dirname(host_file)
     protocol, port = host_file_name.split(".")[0].split("_")
-    print("host_file_name = %s, protocol = %s, port = %s" % (host_file_name, protocol, port))
+    #print("host_file_name = %s, protocol = %s, port = %s" % (host_file_name, protocol, port))
 
     if protocol in ["tcp", "udp"]:
         output_file = os.path.join(host_file_dir, "service_detection_%s_%s.gnmap" % (protocol, port))
@@ -114,11 +114,11 @@ def probe_service(args):
         nmap_command = "nmap %s -Pn -p%s --max-rate %s -sV -iL %s -oG %s" % (scan_type, port, pps, host_file, output_file)
         print("[*] initiating service detection for %s/%s" % (protocol.upper(), port))
         print(nmap_command)
-        #result = subprocess.run(nmap_command, capture_output=True)
-        #if len(result.stderr) > 0:
-        #    print("[-] ERROR in nmap command %s" % nmap_command)
-        #    print("[-] %s" % result.stderr)
-        #    sys.exit(1)
+        result = subprocess.run(nmap_command, capture_output=True)
+        if len(result.stderr) > 0:
+            print("[-] ERROR in nmap command %s" % nmap_command)
+            print("[-] %s" % result.stderr)
+            sys.exit(1)
 
 
 def main():
