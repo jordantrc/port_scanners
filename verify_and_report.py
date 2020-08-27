@@ -41,7 +41,7 @@ def parse_scan_file(scan_file, output_directory):
                 else:
                     assert False, "file type unknown"
             port_info = parse_line(line, file_type)  # returns [state, proto, port, host, banner]
-            if len(port_info) > 0 and port_info[0] == "open":
+            if port_info is not None and port_info[0] == "open":
                 host_output(output_directory, port_info[1], port_info[2], port_info[3])
 
 
@@ -57,7 +57,7 @@ def produce_report(output_directory, report_file):
             with open(s, 'r') as s_fd:
                 for line in s_fd.readlines():
                     port_info = parse_line(line, "nmap")
-                    if len(port_info) > 0:
+                    if port_info is not None:
                         csvwriter.writerow([port_info[3], port_info[1], port_info[2], port_info[0], port_info[4]])
 
 
