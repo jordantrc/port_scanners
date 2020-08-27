@@ -156,7 +156,7 @@ def main():
     with multiprocessing.Pool(processes=num_scans) as pool:
         pool.map(probe_service, host_files)
     
-    #produce_report(output_directory, report_output_file)
+    produce_report(output_directory, report_output_file)
     
 
 if __name__ == "__main__":
