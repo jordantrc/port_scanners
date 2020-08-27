@@ -48,7 +48,7 @@ def parse_scan_file(scan_file, output_directory):
 def produce_report(output_directory, report_file):
     """Generates the report."""
     file_list = os.listdir(output_directory)
-    service_detection_files = [os.path.join([output_directory, x]) for x in file_list if "service_detection" in x]
+    service_detection_files = [os.path.join(output_directory, x) for x in file_list if "service_detection" in x]
     
     with open(report_file, 'w') as csv_fd:
         csvwriter = csv.writer(csv_fd, dialect='excel')
