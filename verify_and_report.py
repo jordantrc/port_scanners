@@ -58,7 +58,7 @@ def produce_report(output_directory, report_file):
                 for line in s_fd.readlines():
                     port_info = parse_line(line, "nmap")
                     if len(port_info) > 0:
-                        print("line = %s, port_info = %s" % (line, port_info))
+                        #print("line = %s, port_info = %s" % (line, port_info))
                         csvwriter.writerow([port_info[3], port_info[1], port_info[2], port_info[0], port_info[4]])
 
 
