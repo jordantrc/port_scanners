@@ -134,11 +134,9 @@ def main():
     scan_file_dir = os.path.dirname(scan_file)
     scan_file_base = os.path.splitext(os.path.basename(scan_file))[0]
     if scan_file_dir == "":
-        scan_file_dir = "." + os.path.pathsep
-    else:
-        scan_file_dir += os.path.pathsep
-    output_directory = scan_file_dir + scan_file_base
-    report_output_file = output_directory + os.pathsep + scan_file_base + ".csv"
+        scan_file_dir = "."
+    output_directory = os.path.join(scan_file_dir, scan_file_base)
+    report_output_file = os.path.join(output_directory, scan_file_base + ".csv")
     assert not os.path.isdir(output_directory), "output directory %s already exists" % output_directory
     
     num_scans = int(args.num_scans[0])
