@@ -128,7 +128,7 @@ def main():
     args = parser.parse_args()
 
     # scan file argument
-    scan_file = args.scan_file
+    scan_file = args.scan_file[0]
     assert os.path.isfile(scan_file), "scan file %s does not exist" % scan_file
     # get directory of scan file
     scan_file_dir = os.path.dirname(scan_file)
@@ -141,8 +141,8 @@ def main():
     report_output_file = output_directory + os.pathsep + scan_file_base + ".csv"
     assert not os.path.isdir(output_directory), "output directory %s already exists" % output_directory
     
-    num_scans = int(args.num_scans)
-    max_pps = int(args.max_pps)
+    num_scans = int(args.num_scans[0])
+    max_pps = int(args.max_pps[0])
     pps_per_scan = max(1, int(max_pps / num_scans))
 
     # make the directory
