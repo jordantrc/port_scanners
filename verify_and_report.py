@@ -124,7 +124,6 @@ def probe_service(args):
         if len(result.stderr) > 0:
             print("[-] ERROR in nmap command %s" % nmap_command)
             print("[-] %s" % result.stderr)
-            sys.exit(1)
 
 
 def main():
