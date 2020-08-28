@@ -8,7 +8,10 @@
 # output directory.
 #
 # Usage: 
-# verify_and_report.py <scan file> <num concurrent scans> <max packets per second>
+# verify_and_report.py [OPTIONS] <scan file> <num concurrent scans> <max packets per second>
+# OPTIONS:
+#   -x, --exclude <comma separated list of ports>   exclude the list of ports from service detection
+#
 
 import argparse
 import csv
@@ -28,7 +31,7 @@ def host_output(output_directory, proto, port, host):
         host_fd.write("%s\n" % host)
 
 
-def parse_scan_file(scan_file, output_directory):
+def parse_scan_file(scan_file, output_directory, exclude_ports):
     """Parses the initial scan file."""
     with open(scan_file, 'r') as scan_fd:
         for i, line in enumerate(scan_fd):
@@ -42,7 +45,8 @@ def parse_scan_file(scan_file, output_directory):
                     assert False, "file type unknown"
             port_info = parse_line(line, file_type)  # returns [state, proto, port, host, banner]
             if len(port_info) > 0 and port_info[0] == "open":
-                host_output(output_directory, port_info[1], port_info[2], port_info[3])
+                if port_info[2] not in exclude_ports:
+                    host_output(output_directory, port_info[1], port_info[2], port_info[3])
 
 
 def produce_report(output_directory, report_file):
@@ -125,12 +129,13 @@ def probe_service(args):
 
 def main():
     parser = argparse.ArgumentParser("verifies and reports on a masscan file")
+    parser.add_argument("-x", "--exclude", required=False, help="ports to exclude")
     parser.add_argument("scan_file", nargs=1, help="masscan file to use for verification and reporting")
     parser.add_argument("num_scans", nargs=1, help="number of scans to run concurrently")
     parser.add_argument("max_pps", nargs=1, help="maximum packets per second across all scans")
     args = parser.parse_args()
 
-    # scan file argument
+    # required arguments
     scan_file = args.scan_file[0]
     assert os.path.isfile(scan_file), "scan file %s does not exist" % scan_file
     # get directory of scan file
@@ -146,10 +151,16 @@ def main():
     max_pps = int(args.max_pps[0])
     pps_per_scan = max(1, int(max_pps / num_scans))
 
+    # options
+    exlude_ports = []
+    if args.exclude is not None:
+        exclude_ports = args.exclude.split(",")
+        exclude_ports = [x.strip() for x in exclude_ports]
+
     # make the directory
     os.mkdir(output_directory, 0o755)
 
-    parse_scan_file(scan_file, output_directory)
+    parse_scan_file(scan_file, output_directory, exclude_ports)
 
     # output_directory is now full of files named protocol_port number.txt
     host_files = os.listdir(output_directory)
