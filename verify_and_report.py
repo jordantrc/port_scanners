@@ -151,7 +151,7 @@ def main():
     pps_per_scan = max(1, int(max_pps / num_scans))
 
     # options
-    exlude_ports = []
+    exclude_ports = []
     if args.exclude is not None:
         exclude_ports = args.exclude.split(",")
         exclude_ports = [x.strip() for x in exclude_ports]
