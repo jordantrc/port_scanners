@@ -109,7 +109,7 @@ then
     udp_portlist=$udp_default_portlist
 elif [ "$num_ports" ]
 then
-    if [ "$num_ports" -eq "all" ]
+    if [[ "$num_ports" == "all" ]]
     then
         tcp_portlist="1-65535"
         udp_portlist="1-65535"
