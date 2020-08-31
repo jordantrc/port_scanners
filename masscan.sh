@@ -18,7 +18,7 @@ usage () {
     echo ""
     echo "  port specification:"
     echo "  -p <n>  scan the top n ports as determined by nmap, n must be between"
-    echo "          1 and 100 (inclusive)."
+    echo "          1 and 100 (inclusive), or n must be \"all\"."
     echo "  -l      p1,p2,p3,...pn:	scan the listed ports"
     echo "	if no option is specified, a default list of 158 TCP ports will be scanned."
 }
@@ -109,7 +109,11 @@ then
     udp_portlist=$udp_default_portlist
 elif [ "$num_ports" ]
 then
-    if [ "$num_ports" -ge 1 -a "$num_ports" -le 100 ]
+    if [ "$num_ports" -eq "all" ]
+    then
+        tcp_portlist="1-65535"
+        udp_portlist="1-65535"
+    elif [ "$num_ports" -ge 1 -a "$num_ports" -le 100 ]
     then
         # construct the port lists
         tcp_portlist=""
@@ -124,7 +128,7 @@ then
             fi
         done
     else
-        echo "Number of ports must be between 1 and 100"
+        echo "Number of ports must be between 1 and 100, or \"all\""
         exit 1
     fi
 elif [ "$port_list" ]
