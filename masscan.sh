@@ -2,7 +2,7 @@
 #
 
 usage () { 
-    echo "Usage: masscan.sh [port specification] [OPTIONS] -o <output base name> -r <scanning rate> -t <target specification>"
+    echo "Usage: masscan.sh [port specification] [OPTIONS] -o <output base name> -r <scanning rate> -t <target specification> [-p|-l <port specification>]"
     echo "Required Arguments:"
     echo "  -o:     base names for output files"
     echo "  -r:     scanning rate (packets per second)"
@@ -10,13 +10,17 @@ usage () {
     echo "          single IP address"
     echo ""
     echo "Optional Arguments:"
-    echo "  -m:     router MAC address"
-    echo "  -u:     perform a UDP scan as well as a TCP scan"
-    echo "  -e:     don't scan, just echo the masscan command that would be run"
     echo "  -a:     perform false positive checks automatically"
+    echo "  -d:     duration to run the scan, the duration has to be in the format:"
+    echo "          <floating-point number><s|m|h|d>"
+    echo "          where s is seconds (and default if no suffix provided), m is minutes, h is hours, d is days "
+    echo "  -e:     don't scan, just echo the masscan command that would be run"
+    echo "  -m:     router MAC address"
+    echo "  -s:     resume a scan using the local paused.conf file"
+    echo "  -u:     perform a UDP scan as well as a TCP scan"
     echo "  -x:     file containing systems to exclude from scanning"
     echo ""
-    echo "  port specification:"
+    echo "Port Specification:"
     echo "  -p <n>  scan the top n ports as determined by nmap, n must be between"
     echo "          1 and 100 (inclusive), or n must be \"all\"."
     echo "  -l      p1,p2,p3,...pn:	scan the listed ports"
@@ -25,12 +29,15 @@ usage () {
 
 gw_mac_address=""
 exclude_file=""
+duration=""
 udp_scan=false
 echo_only=false
 auto_check=false
-while getopts "aehul:m:o:p:r:t:x:" OPTION; do
+resume=false
+while getopts "ad:ehul:m:o:p:r:st:x:" OPTION; do
     case "$OPTION" in
         a ) auto_check=true;;
+        d ) duration="$OPTARG";;
         e ) echo_only=true;;
         h ) usage; exit;;
         u ) udp_scan=true;;
@@ -39,6 +46,7 @@ while getopts "aehul:m:o:p:r:t:x:" OPTION; do
         o ) outputbase="$OPTARG";;
         p ) num_ports="$OPTARG";;
         r ) rate="$OPTARG";;
+        s ) resume=true;;
         t ) targets="$OPTARG";;
         x ) exclude_file="$OPTARG";;
         \?) echo "Unknown option: -$OPTARG" >&2; exit 1;;
@@ -47,9 +55,24 @@ while getopts "aehul:m:o:p:r:t:x:" OPTION; do
     esac
 done
 
+# check for paused.conf in local directory, if it exists
+# and resume is false, exit
+if [ -f "paused.conf" ] && [ "$resume" = false ]; then
+    echo "[-] local paused.conf file found and resume option is not set"
+    echo "[-] either set resume option or delete the paused.conf file"
+    usage
+    exit 1
+fi
+
+# check for resume set but paused.conf is missing
+if [ "$resume" = true ] && [ ! -f "paused.conf" ]; then
+    echo "[-] resume option is set but paused.conf does not exist"
+    usage
+    exit 1
+fi
+
 # test required arguments
-if [ ! "$rate" ] || [ ! "$targets" ] || [ ! "$outputbase" ]
-then
+if [ ! "$rate" ] || [ ! "$targets" ] || [ ! "$outputbase" ]; then
     echo "Missing required arguments"
     usage
     exit 1
@@ -162,16 +185,36 @@ else
     exclude_option=""
 fi
 
-masscan_cmd="masscan $target_specification $exclude_option --ping $router_option -p$port_argument --rate $rate -oL $outputbase.masscan"
+# check if duration is set
+if [ ${#duration} -gt 0 ]; then
+    echo "[*] running scan for $duration"
+    command_prefix="timeout -s SIGINT $duration"
+else
+    command_prefix=""
+fi
+
+# build final command
+if [ "$resume" = false ]; then
+    masscan_cmd="$command_prefix masscan $target_specification $exclude_option --ping $router_option -p$port_argument --rate $rate -oL $outputbase.masscan"
+else
+    echo "[*] Resuming from paused.conf"
+    masscan_cmd="$command_prefix masscan --resume paused.conf"
+fi
 
 if [ "$echo_only" = true ]; then
-    echo "Masscan command:"
+    echo "Command to be run:"
     echo "$masscan_cmd"
     exit 0
 fi
 
+# start or append to log file
 logfile=$outputbase"_log.txt"
-echo "============ifconfig===============" > "${logfile}"
+if [ "$resume" = true ]; then
+    echo "RESUMING SCAN" >> "${logfile}"
+else
+    echo "STARTING SCAN" > "${logfile}"
+fi
+echo "============ifconfig===============" >> "${logfile}"
 ifconfig >> "${logfile}"
 echo "============/etc/resolv.conf===============" >> "${logfile}"
 cat /etc/resolv.conf >> "${logfile}"
@@ -201,3 +244,5 @@ if [ "$auto_check" = true ]; then
     fi
     ./probe_services.sh "$outputbase" 10 "$rate"
 fi
+
+exit 0
