@@ -15,7 +15,7 @@ usage () {
     echo "          <floating-point number><s|m|h|d>"
     echo "          where s is seconds (and default if no suffix provided), m is minutes, h is hours, d is days "
     echo "  -e:     don't scan, just echo the masscan command that would be run"
-    echo "  -m:     router MAC address"
+    echo "  -i:     adapter IP address"
     echo "  -s:     resume a scan using the local paused.conf file"
     echo "  -u:     perform a UDP scan as well as a TCP scan"
     echo "  -x:     file containing systems to exclude from scanning"
@@ -27,14 +27,14 @@ usage () {
     echo "	if no option is specified, a default list of 158 TCP ports will be scanned."
 }
 
-gw_mac_address=""
+adapter_ip=""
 exclude_file=""
 duration=""
 udp_scan=false
 echo_only=false
 auto_check=false
 resume=false
-while getopts "ad:ehul:m:o:p:r:st:x:" OPTION; do
+while getopts "ad:ehul:i:o:p:r:st:x:" OPTION; do
     case "$OPTION" in
         a ) auto_check=true;;
         d ) duration="$OPTARG";;
@@ -42,7 +42,7 @@ while getopts "ad:ehul:m:o:p:r:st:x:" OPTION; do
         h ) usage; exit;;
         u ) udp_scan=true;;
         l ) port_list="$OPTARG";;
-        m ) router_mac="$OPTARG";;
+        i ) adapter_ip="$OPTARG";;
         o ) outputbase="$OPTARG";;
         p ) num_ports="$OPTARG";;
         r ) rate="$OPTARG";;
@@ -171,11 +171,11 @@ else
     port_argument="$tcp_portlist"
 fi
 
-# check if gw_mac_address option is set
-if [ ${#router_mac} -gt 0 ]; then
-    router_option="--router-mac $router_mac"
+# check if adapter_ip is set
+if [ ${#adapter_ip} -gt 0 ]; then
+    adapter_option="--adapter-ip ${adapter_ip}"
 else
-    router_option=""
+    adapter_option=""
 fi
 
 # check if exclude_file option is set
@@ -195,7 +195,7 @@ fi
 
 # build final command
 if [ "$resume" = false ]; then
-    masscan_cmd="$command_prefix masscan $target_specification $exclude_option --ping $router_option -p$port_argument --rate $rate -oL $outputbase.masscan"
+    masscan_cmd="$command_prefix masscan $target_specification $exclude_option --ping $adapter_option -p$port_argument --rate $rate -oL $outputbase.masscan"
 else
     echo "[*] Resuming from paused.conf"
     masscan_cmd="$command_prefix masscan --resume paused.conf"
