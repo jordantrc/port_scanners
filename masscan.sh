@@ -15,7 +15,7 @@ usage () {
     echo "          <floating-point number><s|m|h|d>"
     echo "          where s is seconds (and default if no suffix provided), m is minutes, h is hours, d is days "
     echo "  -e:     don't scan, just echo the masscan command that would be run"
-    echo "  -i:     adapter IP address"
+    echo "  -i:     interface name"
     echo "  -m:     router MAC address"
     echo "  -s:     resume a scan using the local paused.conf file"
     echo "  -u:     perform a UDP scan as well as a TCP scan"
@@ -28,7 +28,7 @@ usage () {
     echo "	if no option is specified, a default list of 158 TCP ports will be scanned."
 }
 
-adapter_ip=""
+interface=""
 router_mac=""
 exclude_file=""
 duration=""
@@ -44,7 +44,7 @@ while getopts "ad:ehul:i:m:o:p:r:st:x:" OPTION; do
         h ) usage; exit;;
         u ) udp_scan=true;;
         l ) port_list="$OPTARG";;
-        i ) adapter_ip="$OPTARG";;
+        i ) interface="$OPTARG";;
         m ) router_mac="$OPTARG";;
         o ) outputbase="$OPTARG";;
         p ) num_ports="$OPTARG";;
@@ -175,8 +175,8 @@ else
 fi
 
 # check if adapter_ip is set
-if [ ${#adapter_ip} -gt 0 ]; then
-    adapter_option="--adapter-ip ${adapter_ip}"
+if [ ${#interface} -gt 0 ]; then
+    adapter_option="--adapter ${interface}"
 else
     adapter_option=""
 fi
