@@ -16,6 +16,7 @@ usage () {
     echo "          where s is seconds (and default if no suffix provided), m is minutes, h is hours, d is days "
     echo "  -e:     don't scan, just echo the masscan command that would be run"
     echo "  -i:     adapter IP address"
+    echo "  -m:     router MAC address"
     echo "  -s:     resume a scan using the local paused.conf file"
     echo "  -u:     perform a UDP scan as well as a TCP scan"
     echo "  -x:     file containing systems to exclude from scanning"
@@ -28,13 +29,14 @@ usage () {
 }
 
 adapter_ip=""
+router_mac=""
 exclude_file=""
 duration=""
 udp_scan=false
 echo_only=false
 auto_check=false
 resume=false
-while getopts "ad:ehul:i:o:p:r:st:x:" OPTION; do
+while getopts "ad:ehul:i:m:o:p:r:st:x:" OPTION; do
     case "$OPTION" in
         a ) auto_check=true;;
         d ) duration="$OPTARG";;
@@ -43,6 +45,7 @@ while getopts "ad:ehul:i:o:p:r:st:x:" OPTION; do
         u ) udp_scan=true;;
         l ) port_list="$OPTARG";;
         i ) adapter_ip="$OPTARG";;
+        m ) router_mac="$OPTARG";;
         o ) outputbase="$OPTARG";;
         p ) num_ports="$OPTARG";;
         r ) rate="$OPTARG";;
@@ -178,6 +181,13 @@ else
     adapter_option=""
 fi
 
+# check if router_mac is set
+if [ ${#router_mac} -gt 0 ]; then
+    router_option="--router-mac ${router_mac}"
+else
+    router_option=""
+fi
+
 # check if exclude_file option is set
 if [ ${#exclude_file} -gt 0 ]; then
     exclude_option="--excludefile $exclude_file"
@@ -195,7 +205,7 @@ fi
 
 # build final command
 if [ "$resume" = false ]; then
-    masscan_cmd="$command_prefix masscan $target_specification $exclude_option --ping $adapter_option -p$port_argument --rate $rate -oL $outputbase.masscan"
+    masscan_cmd="$command_prefix masscan $target_specification $exclude_option --ping $adapter_option $router_option -p$port_argument --rate $rate -oL $outputbase.masscan"
 else
     echo "[*] Resuming from paused.conf"
     masscan_cmd="$command_prefix masscan --resume paused.conf"
