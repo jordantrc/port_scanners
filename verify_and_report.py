@@ -93,8 +93,12 @@ def parse_line(line, file_type):
             port_list = port_info.split(',')
             port_list = [ x.strip() for x in port_list ]
             for p in port_list:
-                port, state, proto, _, _, _, banner, _ = p.split('/')
-                result = [state, proto, port, host, banner]
+                try:
+                    port, state, proto, _, _, _, banner, _ = p.split('/')
+                    result = [state, proto, port, host, banner]
+                except ValueError as err:
+                    print("[-] Error occurred: %s" % str(err))
+                    print("[-] offending line: %s" % p)
 
     return result
 
