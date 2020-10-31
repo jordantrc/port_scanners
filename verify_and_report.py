@@ -93,8 +93,12 @@ def parse_line(line, file_type):
             port_list = port_info.split(',')
             port_list = [ x.strip() for x in port_list ]
             for p in port_list:
-                port, state, proto, _, _, _, banner, _ = p.split('/')
-                result = [state, proto, port, host, banner]
+                try:
+                    port, state, proto, _, _, _, banner, _ = p.split('/')
+                    result = [state, proto, port, host, banner]
+                except ValueError as err:
+                    print("[-] Error occurred: %s" % str(err))
+                    print("[-] offending line: %s" % p)
 
     return result
 
@@ -120,15 +124,15 @@ def probe_service(args):
         print("[*] initiating service detection for %s/%s" % (protocol.upper(), port))
         print(nmap_command)
         nmap_command = nmap_command.split()
-        result = subprocess.run(nmap_command, capture_output=True)
+        result = subprocess.run(nmap_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if len(result.stderr) > 0:
             print("[-] ERROR in nmap command %s" % nmap_command)
-            print("[-] %s" % result.stderr)
+            print("[-] %s" % result.stderr.decode('ascii'))
 
 
 def main():
     parser = argparse.ArgumentParser("verifies and reports on a masscan file")
-    parser.add_argument("-x", "--exclude", required=False, help="ports to exclude")
+    parser.add_argument("-x", "--exclude", required=False, help="ports to exclude, comma-sparated")
     parser.add_argument("scan_file", nargs=1, help="masscan file to use for verification and reporting")
     parser.add_argument("num_scans", nargs=1, help="number of scans to run concurrently")
     parser.add_argument("max_pps", nargs=1, help="maximum packets per second across all scans")
