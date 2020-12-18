@@ -46,9 +46,9 @@ def parse_scan_file(scan_file, output_directory, exclude_ports, verboseprint):
                     assert False, "file type unknown"
                 verboseprint("[*] file type is %s" % file_type)
             port_info = parse_line(line, file_type, verboseprint)  # returns [state, proto, port, host, banner]
-            if len(port_info) > 0 and port_info[0] == "open":
-                if port_info[2] not in exclude_ports:
-                    host_output(output_directory, port_info[1], port_info[2], port_info[3])
+            for p in port_info:
+                if p[2] not in exclude_ports:
+                    host_output(output_directory, p[1], p[2], p[3])
 
 
 def produce_report(output_directory, report_file, verboseprint):
@@ -98,7 +98,7 @@ def parse_line(line, file_type, verboseprint):
             for p in port_list:
                 try:
                     port, state, proto, _, _, _, banner, _ = p.split('/')
-                    result = [state, proto, port, host, banner]
+                    result.append([state, proto, port, host, banner])
                 except ValueError as err:
                     print("[-] Error occurred: %s" % str(err))
                     print("[-] offending line: %s" % p)
