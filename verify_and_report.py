@@ -11,6 +11,7 @@
 # verify_and_report.py [OPTIONS] <scan file> <num concurrent scans> <max packets per second>
 # OPTIONS:
 #   -x, --exclude <comma separated list of ports>   exclude the list of ports from service detection
+#   -v, --verbose                                   provide verbose output
 #
 
 import argparse
@@ -31,7 +32,7 @@ def host_output(output_directory, proto, port, host):
         host_fd.write("%s\n" % host)
 
 
-def parse_scan_file(scan_file, output_directory, exclude_ports):
+def parse_scan_file(scan_file, output_directory, exclude_ports, verboseprint):
     """Parses the initial scan file."""
     with open(scan_file, 'r') as scan_fd:
         for i, line in enumerate(scan_fd):
@@ -43,14 +44,16 @@ def parse_scan_file(scan_file, output_directory, exclude_ports):
                     file_type = "nmap"
                 else:
                     assert False, "file type unknown"
-            port_info = parse_line(line, file_type)  # returns [state, proto, port, host, banner]
+                verboseprint("[*] file type is %s" % file_type)
+            port_info = parse_line(line, file_type, verboseprint)  # returns [state, proto, port, host, banner]
             if len(port_info) > 0 and port_info[0] == "open":
                 if port_info[2] not in exclude_ports:
                     host_output(output_directory, port_info[1], port_info[2], port_info[3])
 
 
-def produce_report(output_directory, report_file):
+def produce_report(output_directory, report_file, verboseprint):
     """Generates the report."""
+    verboseprint("[*] entering produce_report function")
     file_list = os.listdir(output_directory)
     service_detection_files = [os.path.join(output_directory, x) for x in file_list if "service_detection" in x]
     
@@ -60,13 +63,13 @@ def produce_report(output_directory, report_file):
         for s in service_detection_files:
             with open(s, 'r') as s_fd:
                 for line in s_fd.readlines():
-                    port_info = parse_line(line, "nmap")
+                    port_info = parse_line(line, "nmap", verboseprint)
                     if len(port_info) > 0:
                         #print("line = %s, port_info = %s" % (line, port_info))
                         csvwriter.writerow([port_info[3], port_info[1], port_info[2], port_info[0], port_info[4]])
 
 
-def parse_line(line, file_type):
+def parse_line(line, file_type, verboseprint):
     """Parse a scan file line, returns state, proto, port, host, banner."""
     result = []
     if line[0] == "#":
@@ -100,6 +103,7 @@ def parse_line(line, file_type):
                     print("[-] Error occurred: %s" % str(err))
                     print("[-] offending line: %s" % p)
 
+    verboseprint("[*] parse line result: %s" % result)
     return result
 
 
@@ -131,8 +135,11 @@ def probe_service(args):
 
 
 def main():
+    verbose = False
+
     parser = argparse.ArgumentParser("verifies and reports on a masscan file")
     parser.add_argument("-x", "--exclude", required=False, help="ports to exclude, comma-sparated")
+    parser.add_argument("-v", "--verbose", action="store_true", required=False, help="provide verbose output")
     parser.add_argument("scan_file", nargs=1, help="masscan file to use for verification and reporting")
     parser.add_argument("num_scans", nargs=1, help="number of scans to run concurrently")
     parser.add_argument("max_pps", nargs=1, help="maximum packets per second across all scans")
@@ -159,11 +166,16 @@ def main():
     if args.exclude is not None:
         exclude_ports = args.exclude.split(",")
         exclude_ports = [x.strip() for x in exclude_ports]
+    if args.verbose is not None:
+        verbose = args.verbose
+        print("[*] enabling verbose output")
+    verboseprint = print if verbose else lambda *a, **k: None
 
     # make the directory
+    verboseprint("[*] creating directory")
     os.mkdir(output_directory, 0o755)
 
-    parse_scan_file(scan_file, output_directory, exclude_ports)
+    parse_scan_file(scan_file, output_directory, exclude_ports, verboseprint)
 
     # output_directory is now full of files named protocol_port number.txt
     host_files = os.listdir(output_directory)
@@ -171,7 +183,7 @@ def main():
     with multiprocessing.Pool(processes=num_scans) as pool:
         pool.map(probe_service, host_files)
     
-    produce_report(output_directory, report_output_file)
+    produce_report(output_directory, report_output_file, verboseprint)
     
 
 if __name__ == "__main__":
