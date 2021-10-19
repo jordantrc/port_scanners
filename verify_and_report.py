@@ -45,9 +45,9 @@ def parse_scan_file(scan_file, output_directory, exclude_ports, verboseprint):
                 else:
                     assert False, "file type unknown"
                 verboseprint("[*] file type is %s" % file_type)
-            port_info = parse_line(line, file_type, verboseprint)  # returns [state, proto, port, host, banner]
+            port_info = parse_line(line, file_type, verboseprint)  # returns [[state, proto, port, host, banner],]
             for p in port_info:
-                if p[2] not in exclude_ports:
+                if p[0] == "open" and p[2] not in exclude_ports:
                     host_output(output_directory, p[1], p[2], p[3])
 
 

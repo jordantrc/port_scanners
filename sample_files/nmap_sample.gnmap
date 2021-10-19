@@ -1,1 +1,56 @@
-# Nmap 7.01 scan initiated Tue Oct  8 11:00:36 2019 as: nmap -p T:445,22,U:53,123 -oG nmap_sample.gnmap 192.168.25.0/24
+# Nmap 7.70 scan initiated Fri Dec 18 14:23:57 2020 as: nmap --top-ports=100 -sT -sU -sV -oG sample_files/nmap_sample.gnmap 192.168.25.0/24
+Host: 192.168.25.1 (setup.ubnt.com)	Status: Up
+Host: 192.168.25.1 (setup.ubnt.com)	Ports: 22/open/tcp//ssh//OpenSSH 6.6.1p1 Debian 4~bpo70+1 (protocol 2.0)/, 53/open/tcp//domain//dnsmasq 2.78-23-g9e09429/, 80/open/tcp//http//lighttpd/, 443/open/tcp//ssl|http//Ubiquiti Edge router httpd/, 53/open/udp//domain//dnsmasq 2.78-23-g9e09429/, 67/open|filtered/udp//dhcps///, 68/open|filtered/udp//dhcpc///, 123/open/udp//ntp//NTP v4 (secondary server)/, 1812/open|filtered/udp//radius///, 1813/open|filtered/udp//radacct///
+Host: 192.168.25.4 ()	Status: Up
+Host: 192.168.25.4 ()	Ports: 22/open/tcp//ssh//OpenSSH 6.7p1-hpn14v5 Debian 5+deb8u7.netgear1 (protocol 2.0)/, 80/open/tcp//http//Apache httpd/, 111/open/tcp//rpcbind//2-4 (RPC #100000)/, 139/open/tcp//netbios-ssn//Samba smbd 3.X - 4.X (workgroup: VOLUME)/, 443/open/tcp//ssl|http//Apache httpd/, 445/open/tcp//netbios-ssn//Samba smbd 3.X - 4.X (workgroup: VOLUME)/, 548/open/tcp//afp///, 2049/open/tcp//nfs_acl//2-3 (RPC #100227)/, 10000/open/tcp//snet-sensor-mgmt?///, 111/open/udp//rpcbind//2-4 (RPC #100000)/, 137/open/udp//netbios-ns//Samba nmbd netbios-ns (workgroup: VOLUME)/, 138/open|filtered/udp//netbios-dgm///, 1900/open|filtered/udp//upnp///, 2049/open/udp//nfs_acl//2-3 (RPC #100227)/, 5353/open/udp//mdns//DNS-based service discovery/
+Host: 192.168.25.6 (unifi)	Status: Up
+Host: 192.168.25.6 (unifi)	Ports: 22/open/tcp//ssh//OpenSSH 7.2p2 Ubuntu 4ubuntu2.10 (Ubuntu Linux; protocol 2.0)/, 8080/open/tcp//http-proxy///, 8443/open/tcp//ssl|nagios-nsca//Nagios NSCA/, 1900/open|filtered/udp//upnp///, 5353/open|filtered/udp//zeroconf///
+Host: 192.168.25.7 ()	Status: Up
+Host: 192.168.25.7 ()	Ports: 22/open/tcp//ssh//OpenSSH 8.1 (protocol 2.0)/, 80/open/tcp//http//VMware ESXi Server httpd/, 427/open/tcp//svrloc?///, 443/open/tcp//ssl|https///, 8000/open/tcp//http-alt?///, 68/closed/udp//dhcpc///, 161/closed/udp//snmp///, 427/open/udp//svrloc//Service Location Protocol 2/
+Host: 192.168.25.8 ()	Status: Up
+Host: 192.168.25.8 ()	Ports: 22/open/tcp//ssh//Dropbear sshd 2013.60 (protocol 2.0)/, 80/open/tcp//http//lighttpd/, 443/open/tcp//ssl|http//lighttpd/, 5900/open/tcp//vnc//VNC (protocol 3.8)/, 623/open/udp//asf-rmcp///
+Host: 192.168.25.12 ()	Status: Up
+Host: 192.168.25.12 ()	Ports: 22/open/tcp//ssh//OpenSSH 8.3p1 Debian 1 (protocol 2.0)/
+Host: 192.168.25.13 ()	Status: Up
+Host: 192.168.25.13 ()	Ports: 22/open/tcp//ssh//OpenSSH 7.6p1 Ubuntu 4ubuntu0.3 (Ubuntu Linux; protocol 2.0)/, 80/open/tcp//http//nginx 1.17.9/, 443/open/tcp//ssl|http//nginx/, 8000/open/tcp//http//Splunkd httpd/, 8080/open/tcp//http//Jetty 9.3.z-SNAPSHOT/
+Host: 192.168.25.20 ()	Status: Up
+Host: 192.168.25.20 ()	Ports: 80/open/tcp//http//TiVo To Go httpd 21.10.2.v6-USC-11:849/, 443/open/tcp//ssl|http//TiVo To Go httpd 21.10.2.v6-USC-11:849/, 49152/open/tcp//http//TiVo To Go httpd 21.10.2.v6-USC-11:849/, 5353/open/udp//mdns//DNS-based service discovery/
+Host: 192.168.25.30 ()	Status: Up
+Host: 192.168.25.30 ()	Ports: 443/open/tcp//ssl|http//nginx/
+Host: 192.168.25.101 (VOE-JOCHADWICK1.chad.local)	Status: Up
+Host: 192.168.25.101 (VOE-JOCHADWICK1.chad.local)	Status: Up
+Host: 192.168.25.102 ()	Status: Up
+Host: 192.168.25.102 ()	Ports: 53/open/tcp//tcpwrapped///, 53/open|filtered/udp//domain///, 67/open|filtered/udp//dhcps///
+Host: 192.168.25.104 (amazon-dfd0a4654.chad.local)	Status: Up
+Host: 192.168.25.104 (amazon-dfd0a4654.chad.local)	Ports: 8888/open/tcp//tcpwrapped///, 1900/closed/udp//upnp///, 17185/closed/udp//wdbrpc///, 20031/closed/udp//bakbonenetvault///, 30718/closed/udp//unknown///, 31337/closed/udp//BackOrifice///
+Host: 192.168.25.105 (hubv2-24fd5b000003c1c7.chad.local)	Status: Up
+Host: 192.168.25.105 (hubv2-24fd5b000003c1c7.chad.local)	Ports: 1900/open|filtered/udp//upnp///, 5353/open|filtered/udp//zeroconf///
+Host: 192.168.25.106 (ESP_A70094.chad.local)	Status: Up
+Host: 192.168.25.106 (ESP_A70094.chad.local)	Ports: 49154/open|filtered/udp//unknown///
+Host: 192.168.25.115 (Circle.chad.local)	Status: Up
+Host: 192.168.25.115 (Circle.chad.local)	Ports: 80/open/tcp//rtsp///, 443/open/tcp//ssl|rtsp///, 53/open/udp//domain//dnsmasq 2.79/, 5353/open|filtered/udp//zeroconf///
+Host: 192.168.25.117 (BRWD80F99241BAE.chad.local)	Status: Up
+Host: 192.168.25.117 (BRWD80F99241BAE.chad.local)	Ports: 21/open/tcp//ftp//Brother|HP printer ftpd 1.13/, 23/open/tcp//telnet//Brother|HP printer telnetd/, 80/open/tcp//http//Debut embedded httpd 1.30 (Brother|HP printer http admin)/, 443/open/tcp//ssl|http//Debut embedded httpd 1.30 (Brother|HP printer http admin)/, 515/open/tcp//printer///, 631/open/tcp//ipp?///, 9100/open/tcp//jetdirect?///, 69/open/udp//tftp//Brother printer tftpd/, 137/open/udp//netbios-ns//Samba nmbd netbios-ns (workgroup: BRWD80F99241BAE)/, 161/open/udp//snmp//SNMPv1 server; 0 SNMPv3 server (public)/, 5353/open/udp//mdns//DNS-based service discovery/
+Host: 192.168.25.131 (office.chad.local)	Status: Up
+Host: 192.168.25.131 (office.chad.local)	Ports: 22/open/tcp//ssh//Dropbear sshd (protocol 2.0)/
+Host: 192.168.25.139 (MOH-009536.chad.local)	Status: Up
+Host: 192.168.25.139 (MOH-009536.chad.local)	Status: Up
+Host: 192.168.25.151 (iPad-2.chad.local)	Status: Up
+Host: 192.168.25.151 (iPad-2.chad.local)	Ports: 80/open/tcp//http//nginx/, 443/open/tcp//ssl|http//nginx/, 8080/open/tcp//http//Web-Based Enterprise Management CIM serverOpenPegasus WBEM httpd/, 1900/open|filtered/udp//upnp///, 5353/open/udp//mdns//DNS-based service discovery/
+Host: 192.168.25.188 (unifisw8.chad.local)	Status: Up
+Host: 192.168.25.188 (unifisw8.chad.local)	Ports: 22/open/tcp//ssh//Dropbear sshd (protocol 2.0)/, 161/open/udp//snmp//Ubiquiti Networks, Inc. SNMPv3 server/
+Host: 192.168.25.189 (qca-ioeboard.chad.local)	Status: Up
+Host: 192.168.25.189 (qca-ioeboard.chad.local)	Ports: 22/open/tcp//ssh//Dropbear sshd (protocol 2.0)/
+Host: 192.168.25.192 ()	Status: Up
+Host: 192.168.25.192 ()	Ports: 22/open/tcp//ssh//Dropbear sshd (protocol 2.0)/, 161/open/udp//snmp//Ubiquiti Networks, Inc. SNMPv3 server/
+Host: 192.168.25.196 (nessus.chad.local)	Status: Up
+Host: 192.168.25.196 (nessus.chad.local)	Ports: 22/open/tcp//ssh//OpenSSH 8.2p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)/, 68/open|filtered/udp//dhcpc///
+Host: 192.168.25.197 ()	Status: Up
+Host: 192.168.25.197 ()	Ports: 139/open/tcp//netbios-ssn//Microsoft Windows netbios-ssn/, 68/closed/udp//dhcpc///
+Host: 192.168.25.199 (amazon-fe9b8434d.chad.local)	Status: Up
+Host: 192.168.25.199 (amazon-fe9b8434d.chad.local)	Ports: 8009/open/tcp//http//Amazon Whisperplay DIAL REST service/, 1900/open|filtered/udp//upnp///, 5000/open|filtered/udp//upnp///, 5353/open|filtered/udp//zeroconf///
+Host: 192.168.25.240 ()	Status: Up
+Host: 192.168.25.240 ()	Ports: 21/open/tcp//ftp//Brother|HP printer ftpd 1.10/, 23/open/tcp//telnet//Brother|HP printer telnetd/, 25/open/tcp//smtp//Brother printer smtpd/, 80/open/tcp//http//Debut embedded httpd 1.08 (Brother|HP printer http admin)/, 515/open/tcp//printer///, 631/open/tcp//ipp?///, 9100/open/tcp//jetdirect?///, 69/open/udp//tftp//Brother printer tftpd/, 137/open/udp//netbios-ns//Samba nmbd netbios-ns (workgroup: BRN001BA901F87E)/, 138/open|filtered/udp//netbios-dgm///, 161/open/udp//snmp//SNMPv1 server (public)/, 5353/open/udp//mdns//DNS-based service discovery/
+Host: 192.168.25.5 ()	Status: Up
+Host: 192.168.25.5 ()	Ports: 111/open/tcp//rpcbind//2 (RPC #100000)/, 135/open/tcp//msrpc//Microsoft Windows RPC/, 139/open/tcp//netbios-ssn//Microsoft Windows netbios-ssn/, 443/open/tcp//ssl|http//Microsoft HTTPAPI httpd 2.0 (SSDP|UPnP)/, 445/open/tcp//microsoft-ds?///, 2049/open/tcp//nfs//3 (RPC #100003)/, 3389/open/tcp//ms-wbt-server//Microsoft Terminal Services/, 7/unknown/udp//echo///, 9/unknown/udp//discard///, 17/unknown/udp//qotd///, 19/unknown/udp//chargen///, 49/unknown/udp//tacacs///, 53/unknown/udp//domain///, 67/unknown/udp//dhcps///, 68/unknown/udp//dhcpc///, 69/unknown/udp//tftp///, 80/unknown/udp//http///, 88/unknown/udp//kerberos-sec///, 111/unknown/udp//rpcbind///, 120/unknown/udp//cfdptkt///, 123/unknown/udp//ntp///, 135/unknown/udp//msrpc///, 136/unknown/udp//profile///, 137/unknown/udp//netbios-ns///, 138/unknown/udp//netbios-dgm///, 139/unknown/udp//netbios-ssn///, 158/unknown/udp//pcmail-srv///, 161/unknown/udp//snmp///, 162/unknown/udp//snmptrap///, 177/unknown/udp//xdmcp///, 427/unknown/udp//svrloc///, 443/unknown/udp//https///, 445/unknown/udp//microsoft-ds///, 497/unknown/udp//retrospect///, 500/unknown/udp//isakmp///, 514/unknown/udp//syslog///, 515/unknown/udp//printer///, 518/unknown/udp//ntalk///, 520/unknown/udp//route///, 593/unknown/udp//http-rpc-epmap///, 623/unknown/udp//asf-rmcp///, 626/unknown/udp//serialnumberd///, 631/unknown/udp//ipp///, 996/unknown/udp//vsinet///, 997/unknown/udp//maitrd///, 998/unknown/udp//puparp///, 999/unknown/udp//applix///, 1022/unknown/udp//exp2///, 1023/unknown/udp//unknown///, 1025/unknown/udp//blackjack///, 1026/unknown/udp//win-rpc///, 1027/unknown/udp//unknown///, 1028/unknown/udp//ms-lsa///, 1029/unknown/udp//solid-mux///, 1030/unknown/udp//iad1///, 1433/unknown/udp//ms-sql-s///, 1434/unknown/udp//ms-sql-m///, 1645/unknown/udp//radius///, 1646/unknown/udp//radacct///, 1701/unknown/udp//L2TP///, 1718/unknown/udp//h225gatedisc///, 1719/unknown/udp//h323gatestat///, 1812/unknown/udp//radius///, 1813/unknown/udp//radacct///, 1900/unknown/udp//upnp///, 2000/unknown/udp//cisco-sccp///, 2048/unknown/udp//dls-monitor///, 2049/unknown/udp//nfs///, 2222/unknown/udp//msantipiracy///, 2223/unknown/udp//rockwell-csp2///, 3283/unknown/udp//netassistant///, 3456/unknown/udp//IISrpc-or-vat///, 3703/unknown/udp//adobeserver-3///, 4444/unknown/udp//krb524///, 4500/unknown/udp//nat-t-ike///, 5000/unknown/udp//upnp///, 5060/unknown/udp//sip///, 5353/unknown/udp//zeroconf///, 5632/unknown/udp//pcanywherestat///, 9200/unknown/udp//wap-wsp///, 10000/unknown/udp//ndmp///, 17185/unknown/udp//wdbrpc///, 20031/unknown/udp//bakbonenetvault///, 30718/unknown/udp//unknown///, 31337/unknown/udp//BackOrifice///, 32768/unknown/udp//omad///, 32769/unknown/udp//filenet-rpc///, 32771/unknown/udp//sometimes-rpc6///, 32815/unknown/udp//unknown///, 33281/unknown/udp//unknown///, 49152/unknown/udp//unknown///, 49153/unknown/udp//unknown///, 49154/unknown/udp//unknown///, 49156/unknown/udp//unknown///, 49181/unknown/udp//unknown///, 49182/unknown/udp//unknown///, 49185/unknown/udp//unknown///, 49186/unknown/udp//unknown///, 49188/unknown/udp//unknown///, 49190/unknown/udp//unknown///, 49191/unknown/udp//unknown///, 49192/unknown/udp//unknown///, 49193/unknown/udp//unknown///, 49194/unknown/udp//unknown///, 49200/unknown/udp//unknown///, 49201/unknown/udp//unknown///, 65024/unknown/udp//unknown///	Ignored State: filtered (93)
+# Nmap done at Fri Dec 18 15:29:14 2020 -- 256 IP addresses (27 hosts up) scanned in 3916.84 seconds
