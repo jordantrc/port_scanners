@@ -38,7 +38,7 @@ def parse_line(line, output_directory, file_type, debug):
             print(f"DEBUG nmap line = {line}")
         # Ignore these lines:
         # Host: 10.1.1.1 ()   Status: Up
-        if "Status:" not in line and "Ignored" not in line:
+        if "Status:" not in line:
             # Host: 10.1.1.1 ()   Ports: 21/filtered/tcp//ftp///, 80/open/tcp//http///,
             # 53/open|filtered/udp//domain///, 137/open/udp//netbios-ns///  Ignored State: filtered (195)
             host_info, port_info = line.split("Ports:")
@@ -52,9 +52,12 @@ def parse_line(line, output_directory, file_type, debug):
             port_list = port_info.split(',')
             port_list = [ x.strip() for x in port_list ]
             for p in port_list:
-                port, state, proto, _, desc, _, _, _ = p.split('/')
-                if state == "open":
-                    host_output(output_directory, proto, port, host)
+                try:
+                    port, state, proto, _, desc, _, _, _ = p.split('/')
+                    if state == "open":
+                        host_output(output_directory, proto, port, host)
+                except ValueError:
+                    continue
 
 
     return True
