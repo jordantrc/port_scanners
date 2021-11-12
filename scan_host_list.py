@@ -23,18 +23,22 @@ def host_output(output_directory, proto, port, host):
         host_fd.write("%s\n" % host)
 
 
-def parse_line(line, output_directory, file_type):
+def parse_line(line, output_directory, file_type, debug):
     """Parse a scan file line."""
     if line[0] == "#":
         return None
 
     if file_type == "masscan":
+        if debug:
+            print(f"DEBUG masscan line = {line}")
         state, proto, port, host, ident = line.split()
         host_output(output_directory, proto, port, host)
     elif file_type == "nmap":
+        if debug:
+            print(f"DEBUG nmap line = {line}")
         # Ignore these lines:
         # Host: 10.1.1.1 ()   Status: Up
-        if "Status:" not in line:
+        if "Status:" not in line and "Ignored" not in line:
             # Host: 10.1.1.1 ()   Ports: 21/filtered/tcp//ftp///, 80/open/tcp//http///,
             # 53/open|filtered/udp//domain///, 137/open/udp//netbios-ns///  Ignored State: filtered (195)
             host_info, port_info = line.split("Ports:")
@@ -58,7 +62,10 @@ def parse_line(line, output_directory, file_type):
 
 def main():
     """The main function."""
+    debug = False
+
     parser = argparse.ArgumentParser(description='Creates a list of hosts per protocol/port from a scan file.')
+    parser.add_argument('--debug', '-d', action='store_true', help="Enable debug output")
     parser.add_argument('scan_file', help='Scan file to parse.')
     parser.add_argument('output_directory', help='Directory to put output files into, must not exist.')
     args = parser.parse_args()
@@ -69,6 +76,8 @@ def main():
     # test arguments
     assert os.path.isfile(scan_file)
     assert not os.path.isdir(output_directory)
+    if args.debug is not None:
+        debug = args.debug
 
     # make the directory
     os.mkdir(output_directory, 0o755)
@@ -83,7 +92,7 @@ def main():
                     file_type = "nmap"
                 else:
                     assert False, "file type unknown"
-            parse_line(line, output_directory, file_type)
+            parse_line(line, output_directory, file_type, debug)
 
 
 if __name__ == "__main__":
